@@ -1,0 +1,107 @@
+# serverless.yml
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+service: ts-social
+    
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: us-east-1
+
+functions:
+
+  posts-api:
+    handler: dist/app.handler
+    events:
+      - http:
+          path: /{network}/posts
+          method: ANY
+          request:
+            parameters:
+              paths:
+                network: true
+      - http:
+          path: /{network}/posts/{any+}
+          method: ANY
+          request:
+            parameters:
+              paths:
+                network: true
+          
+  comments-api:
+    handler: dist/app.handler
+    events:
+      - http:
+          path: /{network}/comments
+          method: ANY
+          request:
+            parameters:
+              paths:
+                network: true
+      - http:
+          path: /{network}/comments/{any+}
+          method: ANY
+          request:
+            parameters:
+              paths:
+                network: true
+
+  profiles-api:
+    handler: dist/app.handler
+    events:
+      - http:
+          path: /{network}/profiles
+          method: ANY
+          request:
+            parameters:
+              paths:
+                network: true
+      - http:
+          path: /{network}/profiles/{any+}
+          method: ANY
+          request:
+            parameters:
+              paths:
+                network: true
+
+  newsfeed-api:
+    handler: dist/app.handler
+    events:
+      - http:
+          path: /{network}/feed
+          method: ANY
+          request:
+            parameters:
+              paths:
+                network: true
+      - http:
+          path: /{network}/feed/{any+}
+          method: ANY
+          request:
+            parameters:
+              paths:
+                network: true
+  network-api:
+    handler: dist/app.handler
+    events:
+      - http:
+          path: /networks
+          method: ANY
+
+      - http:
+          path: /networks/{any+}
+          method: ANY
+
+  auth-api:
+    handler: dist/app.handler
+    events:
+      - http:
+          path: /auth
+          method: ANY
+
+      - http:
+          path: /auth/{any+}
+          method: ANY
